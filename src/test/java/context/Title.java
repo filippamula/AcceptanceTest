@@ -1,19 +1,23 @@
 package context;
 
 import com.test.acceptance.AcceptanceSpecification;
-import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Objects;
 
 public class Title extends AcceptanceSpecification {
 
+    @BeforeAll
+    public static void initBrowser(){
+        webDriver = new ChromeDriver();
+    }
+
     @When("Load page")
     public void load_Page() {
-        webDriver = new ChromeDriver();
         webDriver.get(basicURL);
     }
 
@@ -22,8 +26,8 @@ public class Title extends AcceptanceSpecification {
        assert Objects.equals(webDriver.getTitle(), title);
     }
 
-    @After
-    public void cleanup(){
+    @AfterAll
+    public static void cleanup(){
         webDriver.close();
     }
 }
